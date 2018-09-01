@@ -1,5 +1,5 @@
 export const localProperties = {
-    hostname: "https://food-critic-api.herokuapp.com/",
+    hostname: "food-critic-api.herokuapp.com",
     port: ""
 };
 

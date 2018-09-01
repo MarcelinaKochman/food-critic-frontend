@@ -6,7 +6,7 @@ import {localProperties} from "../properties";
 class UrlBuilder extends React.Component {
 
     static buildUrl(endpoint){
-        return "http://" + localProperties.hostname + ":" + localProperties.port + endpoint + "/";
+        return "http://" + localProperties.hostname + endpoint + "/";
     }
 
 }
