@@ -1,0 +1,145 @@
+@import "../node_modules/typeface-roboto-slab";
+
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
+}
+
+.App-header {
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
+}
+
+.App-title {
+    font-size: 1.5em;
+}
+
+.App-intro {
+    font-size: large;
+}
+
+.col {
+  padding: 0 !important;
+}
+
+.headerFont {
+    font-family: 'Roboto Slab', serif;
+}
+
+.divCentered {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divHeader {
+    height: 60px;
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.divSpace {
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.popUp {
+    width: 15%;
+}
+
+.error {
+    font-size: 80%;
+    color: #ec002e;
+}
+
+.doubleFontSize {
+    font-size: 200%;
+}
+
+.form-control {
+    width: 300px !important;
+}
+
+.vertical-center {
+    min-height: 100%; /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
+
+    display: flex;
+    align-items: center;
+
+}
+
+.row-center {
+    margin: auto;
+    max-width: 100px;
+}
+
+div.fill {
+    position: relative;
+    /*display: flex;*/
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+
+.notes {
+    border: 5px solid white;
+    box-shadow: 0 0 20px gainsboro;
+}
+
+div.fill img {
+    object-fit: cover;
+    position: relative;
+    float: left;
+    width: 320px;
+    max-width: 320px;
+    height: 320px;
+    background: no-repeat 50% 50%;
+    background-size: cover;
+}
+
+div.fillSmall img {
+    object-fit: cover;
+    position: relative;
+    float: left;
+    width: 220px;
+    height: 220px;
+    background: no-repeat 50% 50%;
+    background-size: cover;
+}
+
+.brightHeader {
+    font-weight: normal;
+    text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white
+}
+
+.textInput{
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    width: stretch !important;
+    resize: none;
+}
+
+.textInput:focus {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #ffc107;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 0;
+    outline: none;
+}
