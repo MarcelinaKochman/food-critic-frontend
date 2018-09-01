@@ -45,6 +45,7 @@ class LoginPage extends React.Component {
 
                     response.json().then(function(data) {
                         sessionStorage.login = data.login;
+                        sessionStorage.id = data.id;
                     });
 
                     document.getElementById("loginButtonDiv").innerHTML = "";

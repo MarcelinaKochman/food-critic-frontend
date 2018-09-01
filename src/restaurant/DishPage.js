@@ -3,26 +3,78 @@ import '../App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-import {colors, endpointsBackend, images} from "../properties";
+import {colors, endpoints, endpointsBackend, images} from "../properties";
 import UrlBuilder from "../common/UrlBuilder";
 import {Fetch} from "react-data-fetching";
 import ReactImageFallback from "react-image-fallback";
 import Rating from "react-rating";
-import NewComment from "./NewComment";
 
 
 class RegisterPage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            id: props.history.location.state.key
-        };
+
         this.loggedIn = sessionStorage.getItem('login') !== null;
         this.loggedUser = sessionStorage.getItem('login');
+        this.loggedUserId = sessionStorage.getItem('id');
+
+        this.state = {
+            userRefId: this.loggedUserId,
+            dishRefId: props.history.location.state.key,
+            rate: '',
+            review: ''
+        };
+
+        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleRatingChange = this.handleRatingChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+
+    handleInputChange(event) {
+        const target = event.target;
+        const inputName = target.name;
+        const inputValue = target.value;
+
+        this.setState({
+            [inputName]: inputValue
+        });
+    }
+
+    handleRatingChange(event) {
+        console.log(event);
+        this.setState({
+            rate: event
+        });
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+
+        fetch(UrlBuilder.buildUrl(endpointsBackend.addOpinion), {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(this.state),
+        })
+            .then((result) => (result.status === 400) ? result.json() : result)
+            .then(function (response) {
+                window.location.reload();
+            });
+    }
+
+
     render() {
+        if (!this.loggedIn) {
+            return (
+                <h6>Aby zobaczyc opinie i napisac wlasna recenzje musisz byc zalogowany! <a href={endpoints.login}>Zaloguj
+                    sie</a></h6>
+            )
+        }
+
         return (
             <div>
                 <div style={{"cursor": "pointer"}} onClick={() => window.history.back()}>
@@ -30,7 +82,7 @@ class RegisterPage extends React.Component {
                 </div>
                 <div className="container">
                     <div className="jumbotron" style={{"background": "none"}}>
-                        <Fetch url={UrlBuilder.buildUrl(endpointsBackend.dish) + this.state.id}>
+                        <Fetch url={UrlBuilder.buildUrl(endpointsBackend.dish) + this.state.dishRefId}>
                             {({data}) => (
                                 <div>
                                     <div className="row">
@@ -61,7 +113,7 @@ class RegisterPage extends React.Component {
                                                     url={UrlBuilder.buildUrl(endpointsBackend.dishRate) + data.id}>
                                                     {({data}) => (
                                                         <div key={data.id + "divStars"}>
-                                                            <a className={"headerFont doubleFontSize"}> {data.rate}
+                                                            <a className={"headerFont doubleFontSize"}> {this.rateFormat(data.rate)}
                                                                 <small style={{
                                                                     "color": "grey",
                                                                     "fontSize": "50%",
@@ -85,11 +137,9 @@ class RegisterPage extends React.Component {
                                             </div>
                                             <hr/>
 
-
                                             {/*opinions*/}
                                             {/*opinions*/}
                                             {/*opinions*/}
-
 
                                             <Fetch
                                                 url={UrlBuilder.buildUrl(endpointsBackend.opinionsForDish) + data.id}>
@@ -102,7 +152,6 @@ class RegisterPage extends React.Component {
                                                                  "fontSize": "80%"
                                                              }}>
 
-
                                                             {/*userInfo*/}
                                                             {/*userInfo*/}
                                                             {/*userInfo*/}
@@ -113,7 +162,8 @@ class RegisterPage extends React.Component {
                                                                     <div>
                                                                         <h4 className={"headerFont"}
                                                                             style={{"borderBottom": "1px solid #dddddd"}}>
-                                                                            <i className="fa fa-user"></i> {data.login}</h4>
+                                                                            <i className="fa fa-user"></i> {data.login}
+                                                                        </h4>
                                                                     </div>
                                                                 )}
                                                             </Fetch>
@@ -148,8 +198,51 @@ class RegisterPage extends React.Component {
                                                 )}
                                             </Fetch>
 
-                                            <NewComment/>
+{/*newcomment*/}
 
+                                            <div id={"newComent"}>
+                                                <h5>Dodaj opinie:</h5>
+                                                <div className="notes"
+                                                     style={{
+                                                         "padding": "10px",
+                                                         "margin": "20px",
+                                                         "fontSize": "80%"
+                                                     }}>
+
+                                                    {/*userInfo*/}
+
+                                                    <div>
+                                                        <h4 className={"headerFont"}
+                                                            style={{"borderBottom": "1px solid #dddddd"}} id="login">
+                                                            <i className="fa fa-user"></i> {this.loggedUser}</h4>
+                                                    </div>
+                                                    <div>
+                                                        <Rating
+                                                            emptySymbol="fa fa-star-o fa-2x"
+                                                            fullSymbol="fa fa-star fa-2x"
+                                                            style={{"color": colors.yellow}}
+                                                            name="rate"
+                                                            initialRating={this.state.rate}
+                                                            onChange={this.handleRatingChange}
+                                                        />
+                                                    </div>
+
+                                                    {/*review*/}
+
+                                                    <a style={{
+                                                        "fontSize": "120%"
+                                                    }}><textarea name="review"
+                                                                 rows="3"
+                                                                 onChange={this.handleInputChange}
+                                                                 className={"textInput"}
+                                                                 placeholder={"Jak smakowalo Ci danie?"}/></a>
+
+                                                    <button className={"btn btn-warning"}
+                                                            onClick={this.handleSubmit}>Zostaw recenzje
+                                                    </button>
+
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -166,6 +259,10 @@ class RegisterPage extends React.Component {
 
     priceFormat(number) {
         return parseFloat(Math.round(number * 100) / 100).toFixed(2) + " zl";
+    }
+
+    rateFormat(number) {
+        return parseFloat(Math.round(number * 100) / 100).toFixed(1);
     }
 }
 

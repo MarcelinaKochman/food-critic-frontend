@@ -18,6 +18,7 @@ export const endpointsBackend = {
     user: "/user",
     restaurant: "/restaurant",
     dishRate: "/rate/dish",
+    addOpinion: "/opinion",
     restaurantRate: "/rate/restaurant",
     opinionsForDish: "/opinion/dish"
 };
