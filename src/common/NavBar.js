@@ -39,10 +39,6 @@ class NavBar extends React.Component {
                                 {/*<a className="nav-link disabled" href="/">Disabled</a>*/}
                             {/*</li>*/}
                         </ul>
-                        <form className="form-inline my-2 my-lg-0">
-                            <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
-                            <button className="btn btn-outline-warning my-2 my-sm-0" type="submit" style={{marginRight:"8px"}}>Search</button>
-                        </form>
                         <Button className="btn btn-warning my-2 my-sm-0" href={endpoints.register} style={{marginRight:"8px"}}>Rejestracja</Button>
                         <LoginButton/>
                     </div>
